@@ -10,7 +10,7 @@ const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync("db.json");
 const db = low(adapter);
 
-db.defaults({ ingredients: [] }).write();
+db.defaults({ ingredients: [], orders: [] }).write();
 
 const app = express();
 app.use(
@@ -234,13 +234,90 @@ app.put("/ingredients/:ingredientId", (req, res) => {
  *
  */
 app.delete("/ingredients/:ingredientId", (req, res) => {
-  const ingredient = db
+  db
     .get("ingredients")
     .remove({ slug: req.params.ingredientId })
     .write();
 
   res.send({ status: true, message: "Success" });
 });
+
+/**
+ * @swagger
+ * /orders:
+ *   get:
+ *     produces:
+ *       - application/json
+ *     description: Показать все заказы
+ *     responses:
+ *       200:
+ *         description: Success
+ *
+ */
+app.get("/orders", (req, res) => {
+  const orders = db.get("orders");
+  res.send(orders);
+});
+
+
+/**
+ * @swagger
+ * /orders:
+ *   post:
+ *     description: Создать новый заказ
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: order
+ *         description: Список ингредиентов
+ *         schema:
+ *           type: object
+ *           required:
+ *             - ingredients
+ *             - address
+ *             - name
+ *             - card_number
+ *           properties:
+ *             ingredients:
+ *               type: array
+ *               items: string
+ *               description: Список выбранных ингредиентов
+ *             address:
+ *               type: string
+ *               description: Адрес заказа
+ *             name:
+ *               type: string
+ *               description: Имя заказчика
+ *             card_number:
+ *               type: string
+ *               description: Номер карты
+ *     responses:
+ *       200:
+ *         description: Success
+ *       500:
+ *         description: Ошибка на сервере
+ *
+ */
+app.post("/orders", (req, res) => {
+  try {
+    const { name, ingredients, address, card_number } = req.body;
+
+    db.get("orders")
+      .push({ name, ingredients, address, card_number})
+      .write();
+
+    return res.send({
+      status: true,
+      message: "Success",
+    });
+  } catch (e) {
+    return res.status(500).send(e);
+  }
+});
+
 
 const port = process.env.PORT || 3000;
 
