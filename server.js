@@ -6,6 +6,8 @@ const cors = require("cors");
 const morgan = require("morgan");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
+const { nanoid } = require("nanoid");
+const idlength = 8;
 
 const adapter = new FileSync("db.json");
 const db = low(adapter);
@@ -76,7 +78,7 @@ app.get("/ingredients", (req, res) => {
 app.get("/ingredients/:ingredientId", (req, res) => {
   const ingredient = db
     .get("ingredients")
-    .find({ slug: req.params.ingredientId })
+    .find({ id: req.params.ingredientId })
     .value();
 
   res.send(ingredient);
@@ -136,7 +138,7 @@ app.post("/ingredients", (req, res) => {
     image.mv(`./uploads/${fileName}`);
 
     db.get("ingredients")
-      .push({ name, slug, price, category, image: fileName })
+      .push({ id: nanoid(idlength), name, slug, price, category, image: fileName })
       .write();
 
     return res.send({
@@ -203,7 +205,7 @@ app.put("/ingredients/:ingredientId", (req, res) => {
     image.mv(`./uploads/${fileName}`);
 
     db.get("ingredients")
-      .find({ slug: req.params.ingredientId })
+      .find({ id: req.params.ingredientId })
       .assign({ name, slug, price, category, image: fileName })
       .write();
 
@@ -236,7 +238,7 @@ app.put("/ingredients/:ingredientId", (req, res) => {
 app.delete("/ingredients/:ingredientId", (req, res) => {
   db
     .get("ingredients")
-    .remove({ slug: req.params.ingredientId })
+    .remove({ id: req.params.ingredientId })
     .write();
 
   res.send({ status: true, message: "Success" });
@@ -306,7 +308,7 @@ app.post("/orders", (req, res) => {
     const { name, ingredients, address, card_number } = req.body;
 
     db.get("orders")
-      .push({ name, ingredients, address, card_number})
+      .push({ id: nanoid(idlength), name, ingredients, address, card_number})
       .write();
 
     return res.send({
