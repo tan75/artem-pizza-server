@@ -119,7 +119,12 @@ app.get("/ingredients/:ingredientId", (req, res) => {
  *         name: image
  *         type: file
  *         required: true
- *         description: Картинка ингредиента.
+ *         description: Картинка ингредиента для превью пиццы.
+ *       - in: formData
+ *         name: thumbnail
+ *         type: file
+ *         required: true
+ *         description: Превью ингредиента для формы.
  *     responses:
  *       200:
  *         description: Success
@@ -129,7 +134,7 @@ app.get("/ingredients/:ingredientId", (req, res) => {
  */
 app.post("/ingredients", (req, res) => {
   try {
-    const { image } = req.files;
+    const { image, thumbnail } = req.files;
     const { name, slug, price, category } = req.body;
 
     const imageExt = image.name.split(".").pop();
@@ -137,8 +142,13 @@ app.post("/ingredients", (req, res) => {
 
     image.mv(`./uploads/${fileName}`);
 
+    const thumbExt = thumbnail.name.split(".").pop();
+    const thumbFileName = `${slug}-thumb.${thumbExt}`;
+
+    thumbnail.mv(`./uploads/${thumbFileName}`);
+
     db.get("ingredients")
-      .push({ id: nanoid(idlength), name, slug, price, category, image: fileName })
+      .push({ id: nanoid(idlength), name, slug, price, category, image: fileName, thumbnail: thumbFileName })
       .write();
 
     return res.send({
@@ -188,7 +198,12 @@ app.post("/ingredients", (req, res) => {
  *         name: image
  *         type: file
  *         required: true
- *         description: Картинка ингредиента.
+ *         description: Картинка ингредиента для превью пиццы.
+ *       - in: formData
+ *         name: thumbnail
+ *         type: file
+ *         required: true
+ *         description: Превью ингредиента для формы.
  *     responses:
  *       200:
  *         description: Success
@@ -204,9 +219,14 @@ app.put("/ingredients/:ingredientId", (req, res) => {
 
     image.mv(`./uploads/${fileName}`);
 
+    const thumbExt = thumbnail.name.split(".").pop();
+    const thumbFileName = `${slug}-thumb.${thumbExt}`;
+
+    thumbnail.mv(`./uploads/${thumbFileName}`);
+
     db.get("ingredients")
       .find({ id: req.params.ingredientId })
-      .assign({ name, slug, price, category, image: fileName })
+      .assign({ name, slug, price, category, image: fileName, thumbnail: thumbFileName })
       .write();
 
     return res.send({
