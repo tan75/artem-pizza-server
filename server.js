@@ -211,7 +211,7 @@ app.post("/ingredients", (req, res) => {
  */
 app.put("/ingredients/:ingredientId", (req, res) => {
   try {
-    const { image } = req.files;
+    const { image, thumbnail } = req.files;
     const { name, slug, price, category } = req.body;
 
     const imageExt = image.name.split(".").pop();
