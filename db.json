@@ -1,0 +1,140 @@
+{
+  "ingredients": [
+    {
+      "id": "Odd5HuC4",
+      "name": "Бекон",
+      "slug": "bacon",
+      "price": "100",
+      "category": "meat",
+      "image": "bacon.png",
+      "thumbnail": "bacon-thumb.png"
+    },
+    {
+      "id": "xXibhlsf",
+      "name": "Брокколи",
+      "slug": "broccoli",
+      "price": "100",
+      "category": "vegetables",
+      "image": "broccoli.png",
+      "thumbnail": "broccoli-thumb.png"
+    },
+    {
+      "id": "zPVQ1E4O",
+      "name": "Чеддер",
+      "slug": "cheddar",
+      "price": "100",
+      "category": "cheese",
+      "image": "cheddar.png",
+      "thumbnail": "cheddar-thumb.png"
+    },
+    {
+      "id": "2T7Cta-s",
+      "name": "Курица",
+      "slug": "chicken",
+      "price": "100",
+      "category": "meat",
+      "image": "chicken.png",
+      "thumbnail": "chicken-thumb.png"
+    },
+    {
+      "id": "jXkRoKy5",
+      "name": "Дор-Блю",
+      "slug": "dor-blue",
+      "price": "100",
+      "category": "cheese",
+      "image": "dor-blue.png",
+      "thumbnail": "dor-blue-thumb.png"
+    },
+    {
+      "id": "Iieg-VZk",
+      "name": "Ветчина",
+      "slug": "ham",
+      "price": "100",
+      "category": "meat",
+      "image": "ham.png",
+      "thumbnail": "ham-thumb.png"
+    },
+    {
+      "id": "KfE8q4-l",
+      "name": "Грибы",
+      "slug": "mushrooms",
+      "price": "100",
+      "category": "vegetables",
+      "image": "mushrooms.png",
+      "thumbnail": "mushrooms-thumb.png"
+    },
+    {
+      "id": "KJ1aL-Cn",
+      "name": "Моцарелла",
+      "slug": "mozarella",
+      "price": "100",
+      "category": "cheese",
+      "image": "mozarella.png",
+      "thumbnail": "mozarella-thumb.png"
+    },
+    {
+      "id": "88ahAhOr",
+      "name": "Оливки",
+      "slug": "olives",
+      "price": "100",
+      "category": "vegetables",
+      "image": "olives.png",
+      "thumbnail": "olives-thumb.png"
+    },
+    {
+      "id": "l_dyuPpb",
+      "name": "Лук",
+      "slug": "onion",
+      "price": "100",
+      "category": "vegetables",
+      "image": "onion.png",
+      "thumbnail": "onion-thumb.png"
+    },
+    {
+      "id": "RyzrCzfQ",
+      "name": "Перец",
+      "slug": "pepper",
+      "price": "100",
+      "category": "vegetables",
+      "image": "pepper.png",
+      "thumbnail": "pepper-thumb.png"
+    },
+    {
+      "id": "KZKWP7Mt",
+      "name": "Пепперони",
+      "slug": "pepperoni",
+      "price": "100",
+      "category": "meat",
+      "image": "pepperoni.png",
+      "thumbnail": "pepperoni-thumb.png"
+    },
+    {
+      "id": "3EEnpHfa",
+      "name": "Ананас",
+      "slug": "pineapple",
+      "price": "100",
+      "category": "vegetables",
+      "image": "pineapple.png",
+      "thumbnail": "pineapple-thumb.png"
+    },
+    {
+      "id": "qLdDrMz4",
+      "name": "Салями",
+      "slug": "salami",
+      "price": "100",
+      "category": "meat",
+      "image": "salami.png",
+      "thumbnail": "salami-thumb.png"
+    },
+    {
+      "id": "szPhZsmh",
+      "name": "Томаты",
+      "slug": "tomato",
+      "price": "100",
+      "category": "vegetables",
+      "image": "tomato.png",
+      "thumbnail": "tomato-thumb.png"
+    }
+  ],
+  "orders": []
+}

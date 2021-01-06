@@ -17,7 +17,7 @@ db.defaults({ ingredients: [], orders: [] }).write();
 const app = express();
 app.use(
   fileUpload({
-    createParentPath: true,
+    createParentPath: true
   })
 );
 
@@ -31,10 +31,10 @@ const swaggerOptions = {
   swaggerDefinition: {
     info: {
       title: "Library API",
-      version: "1.0.0",
-    },
+      version: "1.0.0"
+    }
   },
-  apis: ["server.js"],
+  apis: ["server.js"]
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
@@ -64,7 +64,7 @@ app.get("/ingredients", (req, res) => {
  *   get:
  *     produces:
  *       - application/json
- *     description: Показать информацию о конкретном ингредиенте 
+ *     description: Показать информацию о конкретном ингредиенте
  *     parameters:
  *       - name: ingredientId
  *         in: path
@@ -148,18 +148,25 @@ app.post("/ingredients", (req, res) => {
     thumbnail.mv(`./uploads/${thumbFileName}`);
 
     db.get("ingredients")
-      .push({ id: nanoid(idlength), name, slug, price, category, image: fileName, thumbnail: thumbFileName })
+      .push({
+        id: nanoid(idlength),
+        name,
+        slug,
+        price,
+        category,
+        image: fileName,
+        thumbnail: thumbFileName
+      })
       .write();
 
     return res.send({
       status: true,
-      message: "Success",
+      message: "Success"
     });
   } catch (e) {
     return res.status(500).send(e);
   }
 });
-
 
 /**
  * @swagger
@@ -226,12 +233,19 @@ app.put("/ingredients/:ingredientId", (req, res) => {
 
     db.get("ingredients")
       .find({ id: req.params.ingredientId })
-      .assign({ name, slug, price, category, image: fileName, thumbnail: thumbFileName })
+      .assign({
+        name,
+        slug,
+        price,
+        category,
+        image: fileName,
+        thumbnail: thumbFileName
+      })
       .write();
 
     return res.send({
       status: true,
-      message: "Success",
+      message: "Success"
     });
   } catch (e) {
     return res.status(500).send(e);
@@ -256,10 +270,7 @@ app.put("/ingredients/:ingredientId", (req, res) => {
  *
  */
 app.delete("/ingredients/:ingredientId", (req, res) => {
-  db
-    .get("ingredients")
-    .remove({ id: req.params.ingredientId })
-    .write();
+  db.get("ingredients").remove({ id: req.params.ingredientId }).write();
 
   res.send({ status: true, message: "Success" });
 });
@@ -280,7 +291,6 @@ app.get("/orders", (req, res) => {
   const orders = db.get("orders");
   res.send(orders);
 });
-
 
 /**
  * @swagger
@@ -328,19 +338,18 @@ app.post("/orders", (req, res) => {
     const { name, ingredients, address, card_number } = req.body;
 
     db.get("orders")
-      .push({ id: nanoid(idlength), name, ingredients, address, card_number})
+      .push({ id: nanoid(idlength), name, ingredients, address, card_number })
       .write();
 
     return res.send({
       status: true,
-      message: "Success",
+      message: "Success"
     });
   } catch (e) {
     return res.status(500).send(e);
   }
 });
 
-
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
