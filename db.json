@@ -136,5 +136,23 @@
       "thumbnail": "tomato-thumb.png"
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "id": "3_xvGN7W",
+      "name": "Иванов Иван Иванович",
+      "ingredients": [
+        {
+          "id": "3EEnpHfa",
+          "name": "Ананас",
+          "slug": "pineapple",
+          "price": "100",
+          "category": "vegetables",
+          "image": "pineapple.png",
+          "thumbnail": "pineapple-thumb.png"
+        }
+      ],
+      "address": "Москва, улица Королёва 13",
+      "card_number": "1234 1234 1234 1234"
+    }
+  ]
 }
