@@ -11,16 +11,74 @@ const idlength = 8;
  */
 
 /**
+ *  @swagger
+ *  components:
+ *    parameters:
+ *      ingredientId:
+ *        name: ingredientId
+ *        in: path
+ *        description: Идентификатор ингредиента
+ *        required: true
+ *        type: string
+ *    schemas:
+ *      Ingredient:
+ *        type: object
+ *        required:
+ *          - name
+ *          - slug
+ *          - price
+ *          - category
+ *          - image
+ *          - thumbnail
+ *        properties:
+ *          id:
+ *            type: string
+ *            description: Автоматический сгенерированный ID ингредиента
+ *          name:
+ *            type: string
+ *            description: Название ингредиента
+ *          slug:
+ *            type: string
+ *            description: Идентификатор ингредиента
+ *          price:
+ *            type: string
+ *            description: Цена ингредиента
+ *          category:
+ *            type: string
+ *            enum: [vegetables, sauces, meat, cheese]
+ *            description: Категория ингредиента
+ *          image:
+ *            type: file
+ *            description: Картинка ингредиента для превью пиццы.
+ *          thumbnail:
+ *            type: file
+ *            description: Превью ингредиента для формы.
+ *        example:
+ *           id: d5fE_asz
+ *           name: Огурец
+ *           slug: cucumber
+ *           price: 100
+ *           caterogy: vegetables
+ *           image: /cucumber.jpg
+ *           thumbnail: /cucumber-thumb.jpg
+ */
+
+/**
  * @swagger
  * /ingredients:
  *   get:
  *     tags: [Ingredients]
  *     produces:
- *       - application/json
  *     description: Показать все ингредиенты
  *     responses:
  *       200:
- *         description: Success
+ *         description: Список всех доступных ингредиентов
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Ingredient'
  *
  */
 router.get("/", (req, res) => {
@@ -34,17 +92,16 @@ router.get("/", (req, res) => {
  * /ingredients/{ingredientId}:
  *   get:
  *     tags: [Ingredients]
- *     produces:
- *       - application/json
  *     description: Показать информацию о конкретном ингредиенте
  *     parameters:
- *       - name: ingredientId
- *         in: path
- *         description: ingredient ID
- *         required: true
+ *       - $ref: '#/components/parameters/ingredientId'
  *     responses:
  *       200:
- *         description: Success
+ *         description: Описание конкретного ингредиента
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Ingredient'
  *
  */
 router.get("/:ingredientId", (req, res) => {
@@ -62,45 +119,19 @@ router.get("/:ingredientId", (req, res) => {
  *   post:
  *     tags: [Ingredients]
  *     description: Создать новый ингредиент
- *     consumes:
- *       - multipart/form-data
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: formData
- *         name: name
- *         type: string
- *         required: true
- *         description: Название ингредиента. Будет показано пользователю.
- *       - in: formData
- *         name: slug
- *         type: string
- *         required: true
- *         description: Идентификатор ингредиента.
- *       - in: formData
- *         name: price
- *         type: number
- *         required: true
- *         description: Цена ингредиента.
- *       - in: formData
- *         name: category
- *         type: string
- *         enum: [vegetables, sauces, meat, cheese]
- *         required: true
- *         description: Категория ингредиента.
- *       - in: formData
- *         name: image
- *         type: file
- *         required: true
- *         description: Картинка ингредиента для превью пиццы.
- *       - in: formData
- *         name: thumbnail
- *         type: file
- *         required: true
- *         description: Превью ингредиента для формы.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/Ingredient'
  *     responses:
  *       200:
- *         description: Success
+ *         description: Ингредиент успешно создан
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Ingredient'
  *       500:
  *         description: Ошибка на сервере
  *
@@ -120,22 +151,19 @@ router.post("/", (req, res) => {
 
     thumbnail.mv(`./uploads/${thumbFileName}`);
 
-    req.app.db.get("ingredients")
-      .push({
-        id: nanoid(idlength),
-        name,
-        slug,
-        price,
-        category,
-        image: fileName,
-        thumbnail: thumbFileName,
-      })
-      .write();
+    const newIngredient = {
+      id: nanoid(idlength),
+      name,
+      slug,
+      price,
+      category,
+      image: fileName,
+      thumbnail: thumbFileName,
+    };
 
-    return res.send({
-      status: true,
-      message: "Success",
-    });
+    req.app.db.get("ingredients").push(newIngredient).write();
+
+    return res.send(newIngredient);
   } catch (e) {
     return res.status(500).send(e);
   }
@@ -146,49 +174,24 @@ router.post("/", (req, res) => {
  * /ingredients/{ingredientId}:
  *   put:
  *     tags: [Ingredients]
- *     produces:
- *       - application/json
  *     description: Обновнить информацию об ингредиенте
  *     parameters:
- *       - name: ingredientId
- *         in: path
- *         description: ingredient ID
- *         required: true
- *       - in: formData
- *         name: name
- *         type: string
- *         required: true
- *         description: Название ингредиента. Будет показано пользователю.
- *       - in: formData
- *         name: slug
- *         type: string
- *         required: true
- *         description: Идентификатор ингредиента.
- *       - in: formData
- *         name: price
- *         type: number
- *         required: true
- *         description: Цена ингредиента.
- *       - in: formData
- *         name: category
- *         type: string
- *         enum: [vegetables, sauces, meat, cheese]
- *         required: true
- *         description: Категория ингредиента.
- *       - in: formData
- *         name: image
- *         type: file
- *         required: true
- *         description: Картинка ингредиента для превью пиццы.
- *       - in: formData
- *         name: thumbnail
- *         type: file
- *         required: true
- *         description: Превью ингредиента для формы.
+ *       - $ref: '#/components/parameters/ingredientId'
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/Ingredient'
  *     responses:
  *       200:
- *         description: Success
- *
+ *         description: Ингредиент успешно обновлён
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Ingredient'
+ *       500:
+ *         description: Ошибка на сервере
  */
 router.put("/:ingredientId", (req, res) => {
   try {
@@ -205,7 +208,8 @@ router.put("/:ingredientId", (req, res) => {
 
     thumbnail.mv(`./uploads/${thumbFileName}`);
 
-    req.app.db.get("ingredients")
+    const ingredient = req.app.db
+      .get("ingredients")
       .find({ id: req.params.ingredientId })
       .assign({
         name,
@@ -217,10 +221,7 @@ router.put("/:ingredientId", (req, res) => {
       })
       .write();
 
-    return res.send({
-      status: true,
-      message: "Success",
-    });
+    return res.send(ingredient);
   } catch (e) {
     return res.status(500).send(e);
   }
@@ -231,17 +232,12 @@ router.put("/:ingredientId", (req, res) => {
  * /ingredients/{ingredientId}:
  *   delete:
  *     tags: [Ingredients]
- *     produces:
- *       - application/json
  *     description: Удалить ингредиент
  *     parameters:
- *       - name: ingredientId
- *         in: path
- *         description: ingredient ID
- *         required: true
+ *       - $ref: '#/components/parameters/ingredientId'
  *     responses:
  *       200:
- *         description: Success
+ *         description: Ингредиент был успешно удалён
  *
  */
 router.delete("/:ingredientId", (req, res) => {
