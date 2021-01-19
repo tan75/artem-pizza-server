@@ -4,9 +4,17 @@ const { nanoid } = require("nanoid");
 const idlength = 8;
 
 /**
+ *  @swagger
+ *  tags:
+ *    name: Ingredients
+ *    description: API ингредиентов для Пиццы
+ */
+
+/**
  * @swagger
  * /ingredients:
  *   get:
+ *     tags: [Ingredients]
  *     produces:
  *       - application/json
  *     description: Показать все ингредиенты
@@ -25,6 +33,7 @@ router.get("/", (req, res) => {
  * @swagger
  * /ingredients/{ingredientId}:
  *   get:
+ *     tags: [Ingredients]
  *     produces:
  *       - application/json
  *     description: Показать информацию о конкретном ингредиенте
@@ -51,6 +60,7 @@ router.get("/:ingredientId", (req, res) => {
  * @swagger
  * /ingredients:
  *   post:
+ *     tags: [Ingredients]
  *     description: Создать новый ингредиент
  *     consumes:
  *       - multipart/form-data
@@ -135,6 +145,7 @@ router.post("/", (req, res) => {
  * @swagger
  * /ingredients/{ingredientId}:
  *   put:
+ *     tags: [Ingredients]
  *     produces:
  *       - application/json
  *     description: Обновнить информацию об ингредиенте
@@ -219,6 +230,7 @@ router.put("/:ingredientId", (req, res) => {
  * @swagger
  * /ingredients/{ingredientId}:
  *   delete:
+ *     tags: [Ingredients]
  *     produces:
  *       - application/json
  *     description: Удалить ингредиент
