@@ -17,7 +17,7 @@ db.defaults({ ingredients: [], orders: [] }).write();
 const app = express();
 app.use(
   fileUpload({
-    createParentPath: true
+    createParentPath: true,
   })
 );
 
@@ -31,10 +31,10 @@ const swaggerOptions = {
   swaggerDefinition: {
     info: {
       title: "Library API",
-      version: "1.0.0"
-    }
+      version: "1.0.0",
+    },
   },
-  apis: ["server.js"]
+  apis: ["server.js"],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
@@ -155,13 +155,13 @@ app.post("/ingredients", (req, res) => {
         price,
         category,
         image: fileName,
-        thumbnail: thumbFileName
+        thumbnail: thumbFileName,
       })
       .write();
 
     return res.send({
       status: true,
-      message: "Success"
+      message: "Success",
     });
   } catch (e) {
     return res.status(500).send(e);
@@ -239,13 +239,13 @@ app.put("/ingredients/:ingredientId", (req, res) => {
         price,
         category,
         image: fileName,
-        thumbnail: thumbFileName
+        thumbnail: thumbFileName,
       })
       .write();
 
     return res.send({
       status: true,
-      message: "Success"
+      message: "Success",
     });
   } catch (e) {
     return res.status(500).send(e);
@@ -337,14 +337,17 @@ app.post("/orders", (req, res) => {
   try {
     const { name, ingredients, address, card_number } = req.body;
 
-    db.get("orders")
-      .push({ id: nanoid(idlength), name, ingredients, address, card_number })
-      .write();
+    const newOrder = {
+      id: nanoid(idlength),
+      name,
+      ingredients,
+      address,
+      card_number,
+    };
 
-    return res.send({
-      status: true,
-      message: "Success"
-    });
+    db.get("orders").push(newOrder).write();
+
+    return res.send(newOrder);
   } catch (e) {
     return res.status(500).send(e);
   }
