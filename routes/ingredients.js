@@ -1,4 +1,5 @@
 const express = require("express");
+const passport = require("passport");
 const router = express.Router();
 const { nanoid } = require("nanoid");
 const idlength = 8;
@@ -13,6 +14,12 @@ const idlength = 8;
 /**
  *  @swagger
  *  components:
+ *    securitySchemes:
+ *      - BearerAuth:
+ *        type: http
+ *        in: header
+ *        scheme: bearer
+ *        bearerFormat: JWT
  *    parameters:
  *      ingredientId:
  *        name: ingredientId
@@ -68,8 +75,7 @@ const idlength = 8;
  * /ingredients:
  *   get:
  *     tags: [Ingredients]
- *     produces:
- *     description: Показать все ингредиенты
+ *     summary: Показать все ингредиенты
  *     responses:
  *       200:
  *         description: Список всех доступных ингредиентов
@@ -92,7 +98,7 @@ router.get("/", (req, res) => {
  * /ingredients/{ingredientId}:
  *   get:
  *     tags: [Ingredients]
- *     description: Показать информацию о конкретном ингредиенте
+ *     summary: Показать информацию о конкретном ингредиенте
  *     parameters:
  *       - $ref: '#/components/parameters/ingredientId'
  *     responses:
@@ -118,7 +124,9 @@ router.get("/:ingredientId", (req, res) => {
  * /ingredients:
  *   post:
  *     tags: [Ingredients]
- *     description: Создать новый ингредиент
+ *     summary: Создать новый ингредиент
+ *     security:
+ *       - BearerAuth
  *     requestBody:
  *       required: true
  *       content:
@@ -132,49 +140,59 @@ router.get("/:ingredientId", (req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Ingredient'
+ *       401:
+ *         description: Вы не авторизованы
  *       500:
  *         description: Ошибка на сервере
  *
  */
-router.post("/", (req, res) => {
-  try {
-    const { image, thumbnail } = req.files;
-    const { name, slug, price, category } = req.body;
+router.post(
+  "/",
+  passport.authenticate("jwt", {
+    session: false,
+  }),
+  (req, res) => {
+    try {
+      const { image, thumbnail } = req.files;
+      const { name, slug, price, category } = req.body;
 
-    const imageExt = image.name.split(".").pop();
-    const fileName = `${slug}.${imageExt}`;
+      const imageExt = image.name.split(".").pop();
+      const fileName = `${slug}.${imageExt}`;
 
-    image.mv(`./uploads/${fileName}`);
+      image.mv(`./uploads/${fileName}`);
 
-    const thumbExt = thumbnail.name.split(".").pop();
-    const thumbFileName = `${slug}-thumb.${thumbExt}`;
+      const thumbExt = thumbnail.name.split(".").pop();
+      const thumbFileName = `${slug}-thumb.${thumbExt}`;
 
-    thumbnail.mv(`./uploads/${thumbFileName}`);
+      thumbnail.mv(`./uploads/${thumbFileName}`);
 
-    const newIngredient = {
-      id: nanoid(idlength),
-      name,
-      slug,
-      price,
-      category,
-      image: fileName,
-      thumbnail: thumbFileName,
-    };
+      const newIngredient = {
+        id: nanoid(idlength),
+        name,
+        slug,
+        price,
+        category,
+        image: fileName,
+        thumbnail: thumbFileName,
+      };
 
-    req.app.db.get("ingredients").push(newIngredient).write();
+      req.app.db.get("ingredients").push(newIngredient).write();
 
-    return res.send(newIngredient);
-  } catch (e) {
-    return res.status(500).send(e);
+      return res.send(newIngredient);
+    } catch (e) {
+      return res.status(500).send(e);
+    }
   }
-});
+);
 
 /**
  * @swagger
  * /ingredients/{ingredientId}:
  *   put:
  *     tags: [Ingredients]
- *     description: Обновнить информацию об ингредиенте
+ *     summary: Обновнить информацию об ингредиенте
+ *     security:
+ *       - BearerAuth
  *     parameters:
  *       - $ref: '#/components/parameters/ingredientId'
  *     requestBody:
@@ -232,7 +250,9 @@ router.put("/:ingredientId", (req, res) => {
  * /ingredients/{ingredientId}:
  *   delete:
  *     tags: [Ingredients]
- *     description: Удалить ингредиент
+ *     summary: Удалить ингредиент
+ *     security:
+ *       - BearerAuth
  *     parameters:
  *       - $ref: '#/components/parameters/ingredientId'
  *     responses:
