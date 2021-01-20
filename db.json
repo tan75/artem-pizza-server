@@ -134,15 +134,6 @@
       "category": "vegetables",
       "image": "tomato.png",
       "thumbnail": "tomato-thumb.png"
-    },
-    {
-      "id": "9KOvJ3gx",
-      "name": "test",
-      "slug": "test",
-      "price": "100",
-      "category": "meat",
-      "image": "test.png",
-      "thumbnail": "test-thumb.png"
     }
   ],
   "orders": [
