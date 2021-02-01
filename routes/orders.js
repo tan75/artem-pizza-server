@@ -17,31 +17,31 @@ const idlength = 8;
  *      Order:
  *        type: object
  *        required:
- *          - ingredients
  *          - size
  *          - dough
- *          - sauces
+ *          - sauce
+ *          - ingredients
  *          - address
  *          - name
  *          - card_number
+ *          - price
  *        properties:
  *          id:
  *            type: string
  *            description: Автоматический сгенерированный ID заказа
- *          ingredients:
- *            type: array
- *            items: string
- *            description: Массив с названиями топпингов
  *          size:
  *            type: string
  *            description: Размер пиццы
  *          dough:
  *            type: string
  *            description: Тип теста
- *          sauces:
+ *          sauce:
+ *            type: string
+ *            description: Тип соуса
+ *          ingredients:
  *            type: array
  *            items: string
- *            description: Массив с названиями соусов
+ *            description: Массив с slug - ингредиентов
  *          address:
  *            type: string
  *            description: Адрес заказа
@@ -51,19 +51,21 @@ const idlength = 8;
  *          card_number:
  *            type: string
  *            description: Номер карты
+ *          price:
+ *            type: string
+ *            description: Цена заказа
  *        example:
- *           id: d5fE_asz
+ *           size: 30
+ *           dough: thick
+ *           sauce: mayo
  *           ingredients:
  *             - cucumber
  *             - salami
  *             - bacon
- *           sauces:
- *             - mayo
- *           size: 30
- *           dough: thick
+ *           address: Sesame Street *
  *           name: Ivan Ivanov
  *           card_number: 0000 0000 0000 0000
- *           address: Sesame Street
+ *           price: 600
  */
 
 /**
@@ -113,17 +115,27 @@ router.get("/", (req, res) => {
  */
 router.post("/", (req, res) => {
   try {
-    const { name, ingredients, dough, sauces, address, card_number } = req.body;
+    const {
+      size,
+      dough,
+      sauce,
+      ingredients,
+      address,
+      name,
+      card_number,
+      price,
+    } = req.body;
 
     const newOrder = {
       id: nanoid(idlength),
-      name,
-      address,
-      card_number,
       size,
       dough,
-      sauces,
+      sauce,
       ingredients,
+      address,
+      name,
+      card_number,
+      price,
     };
 
     req.app.db.get("orders").push(newOrder).write();

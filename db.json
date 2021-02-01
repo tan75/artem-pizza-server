@@ -139,20 +139,48 @@
   "orders": [
     {
       "id": "3_xvGN7W",
-      "name": "Иванов Иван Иванович",
+      "size": "30",
+      "dough": "thin",
+      "sauce": "mayo",
       "ingredients": [
-        {
-          "id": "3EEnpHfa",
-          "name": "Ананас",
-          "slug": "pineapple",
-          "price": "100",
-          "category": "vegetables",
-          "image": "pineapple.png",
-          "thumbnail": "pineapple-thumb.png"
-        }
+        "pineapple",
+        "cucumber",
+        "salami",
+        "bacon"
       ],
       "address": "Москва, улица Королёва 13",
-      "card_number": "1234 1234 1234 1234"
+      "card_number": "1234 1234 1234 1234",
+      "name": "Иванов Иван Иванович",
+      "price": "600"
+    },
+    {
+      "id": "G_91G3gx",
+      "size": 30,
+      "dough": "thick",
+      "sauce": "mayo",
+      "ingredients": [
+        "cucumber",
+        "salami",
+        "bacon"
+      ],
+      "address": "Sesame Street *",
+      "name": "Ivan Ivanov",
+      "card_number": "0000 0000 0000 0000",
+      "price": 600
+    },
+    {
+      "id": "zFpWA0PK",
+      "size": 35,
+      "dough": "thick",
+      "sauce": "mayo",
+      "ingredients": [
+        "salami",
+        "bacon"
+      ],
+      "address": "Sesame Street *",
+      "name": "Yulia Ivanova",
+      "card_number": "0000 0000 0000 0000",
+      "price": 600
     }
   ]
 }
