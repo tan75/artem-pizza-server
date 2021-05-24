@@ -14,6 +14,12 @@ const idlength = 8;
 /**
  *  @swagger
  *  components:
+ *    securitySchemes:
+ *      - BearerAuth:
+ *        type: http
+ *        in: header
+ *        scheme: bearer
+ *        bearerFormat: JWT
  *    parameters:
  *      ingredientId:
  *        name: ingredientId
@@ -119,6 +125,8 @@ router.get("/:ingredientId", (req, res) => {
  *   post:
  *     tags: [Ingredients]
  *     summary: Создать новый ингредиент
+ *     security:
+ *       - BearerAuth
  *     requestBody:
  *       required: true
  *       content:
@@ -183,6 +191,8 @@ router.post(
  *   put:
  *     tags: [Ingredients]
  *     summary: Обновнить информацию об ингредиенте
+ *     security:
+ *       - BearerAuth
  *     parameters:
  *       - $ref: '#/components/parameters/ingredientId'
  *     requestBody:
@@ -241,6 +251,8 @@ router.put("/:ingredientId", (req, res) => {
  *   delete:
  *     tags: [Ingredients]
  *     summary: Удалить ингредиент
+ *     security:
+ *       - BearerAuth
  *     parameters:
  *       - $ref: '#/components/parameters/ingredientId'
  *     responses:

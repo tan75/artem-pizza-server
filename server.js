@@ -7,9 +7,11 @@ const cors = require("cors");
 const morgan = require("morgan");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
-const ingredientsRouter = require("./routes/ingredients")
-const ordersRouter = require("./routes/orders")
-const adminAuthRouter = require("./routes/adminAuth")
+const ingredientsRouter = require("./routes/ingredients");
+const ordersRouter = require("./routes/orders");
+const adminAuthRouter = require("./routes-with-auth/adminAuth");
+const ingredientsWithAuthRouter = require("./routes-with-auth/ingredients");
+const ordersWithAuthRouter = require("./routes-with-auth/orders");
 
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -66,7 +68,6 @@ passport.use(
   )
 );
 
-
 app.db = db;
 
 app.use(
@@ -82,23 +83,47 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 
-const swaggerOptions = {
+const swaggerOptionsV1 = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Library API",
+      title: "Library API V1",
       version: "1.0.0",
     },
   },
   apis: ["./routes/*.js"],
 };
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+const swaggerDocsV1 = swaggerJsDoc(swaggerOptionsV1);
+app.use(
+  "/v1/api-docs",
+  swaggerUI.serveFiles(swaggerDocsV1, {}),
+  swaggerUI.setup(swaggerDocsV1)
+);
 
-app.use("/orders", ordersRouter);
-app.use("/ingredients", ingredientsRouter);
-app.use("/admin-auth", adminAuthRouter);
+app.use("/v1/orders", ordersRouter);
+app.use("/v1/ingredients", ingredientsRouter);
+
+const swaggerOptionsV2 = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Library API V2 (Auth)",
+      version: "1.0.0",
+    },
+  },
+  apis: ["./routes-with-auth/*.js"],
+};
+const swaggerDocsV2 = swaggerJsDoc(swaggerOptionsV2);
+app.use(
+  "/v2/api-docs",
+  swaggerUI.serveFiles(swaggerDocsV2, {}),
+  swaggerUI.setup(swaggerDocsV2)
+);
+
+app.use("/v2/admin-auth", adminAuthRouter);
+app.use("/v2/orders", ordersWithAuthRouter);
+app.use("/v2/ingredients", ingredientsWithAuthRouter);
 
 const port = process.env.PORT || 8080;
 
