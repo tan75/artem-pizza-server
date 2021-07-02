@@ -27,5 +27,8 @@
     "swagger-ui-express": "^4.1.5",
     "yup": "^0.31.0"
   },
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {
+    "nodemon": "^2.0.9"
+  }
 }
