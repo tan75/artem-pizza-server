@@ -81,7 +81,7 @@ const idlength = 8;
  *                 $ref: '#/components/schemas/Ingredient'
  *
  */
-router.get('/', (req, res) => {
+router.get('/v1', (req, res) => {
   const ingredients = req.app.db.get('ingredients');
   res.send(ingredients);
 });
