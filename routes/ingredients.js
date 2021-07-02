@@ -82,7 +82,7 @@ const idlength = 8;
  *
  */
 router.get('/v1/ingredients', (req, res) => {
-  const ingredients = req.app.db.get('ingredients'); //Test
+  const ingredients = req.app.db.get('ingredients');
 
   res.send(ingredients);
 });
