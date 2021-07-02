@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const { nanoid } = require("nanoid");
+const { nanoid } = require('nanoid');
 const idlength = 8;
 
 /**
@@ -85,8 +85,8 @@ const idlength = 8;
  *                 $ref: '#/components/schemas/Order'
  *
  */
-router.get("/", (req, res) => {
-  const orders = req.app.db.get("orders");
+router.get('/v1', (req, res) => {
+  const orders = req.app.db.get('orders');
   res.send(orders);
 });
 
@@ -113,7 +113,7 @@ router.get("/", (req, res) => {
  *         description: Ошибка на сервере
  *
  */
-router.post("/", (req, res) => {
+router.post('/v1', (req, res) => {
   try {
     const {
       size,
@@ -138,7 +138,7 @@ router.post("/", (req, res) => {
       price,
     };
 
-    req.app.db.get("orders").push(newOrder).write();
+    req.app.db.get('orders').push(newOrder).write();
 
     return res.send(newOrder);
   } catch (e) {
