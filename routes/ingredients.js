@@ -1,7 +1,7 @@
-const express = require("express");
-const passport = require("passport");
+const express = require('express');
+const passport = require('passport');
 const router = express.Router();
-const { nanoid } = require("nanoid");
+const { nanoid } = require('nanoid');
 const idlength = 8;
 
 /**
@@ -81,8 +81,8 @@ const idlength = 8;
  *                 $ref: '#/components/schemas/Ingredient'
  *
  */
-router.get("/", (req, res) => {
-  const ingredients = req.app.db.get("ingredients");
+router.get('/v1', (req, res) => {
+  const ingredients = req.app.db.get('ingredients');
 
   res.send(ingredients);
 });
@@ -104,9 +104,9 @@ router.get("/", (req, res) => {
  *               $ref: '#/components/schemas/Ingredient'
  *
  */
-router.get("/:ingredientId", (req, res) => {
+router.get('/:ingredientId', (req, res) => {
   const ingredient = req.app.db
-    .get("ingredients")
+    .get('ingredients')
     .find({ id: req.params.ingredientId })
     .value();
 
@@ -139,8 +139,8 @@ router.get("/:ingredientId", (req, res) => {
  *
  */
 router.post(
-  "/",
-  passport.authenticate("jwt", {
+  '/',
+  passport.authenticate('jwt', {
     session: false,
   }),
   (req, res) => {
@@ -148,12 +148,12 @@ router.post(
       const { image, thumbnail } = req.files;
       const { name, slug, price, category } = req.body;
 
-      const imageExt = image.name.split(".").pop();
+      const imageExt = image.name.split('.').pop();
       const fileName = `${slug}.${imageExt}`;
 
       image.mv(`./uploads/${fileName}`);
 
-      const thumbExt = thumbnail.name.split(".").pop();
+      const thumbExt = thumbnail.name.split('.').pop();
       const thumbFileName = `${slug}-thumb.${thumbExt}`;
 
       thumbnail.mv(`./uploads/${thumbFileName}`);
@@ -168,7 +168,7 @@ router.post(
         thumbnail: thumbFileName,
       };
 
-      req.app.db.get("ingredients").push(newIngredient).write();
+      req.app.db.get('ingredients').push(newIngredient).write();
 
       return res.send(newIngredient);
     } catch (e) {
@@ -201,23 +201,23 @@ router.post(
  *       500:
  *         description: Ошибка на сервере
  */
-router.put("/:ingredientId", (req, res) => {
+router.put('/:ingredientId', (req, res) => {
   try {
     const { image, thumbnail } = req.files;
     const { name, slug, price, category } = req.body;
 
-    const imageExt = image.name.split(".").pop();
+    const imageExt = image.name.split('.').pop();
     const fileName = `${slug}.${imageExt}`;
 
     image.mv(`./uploads/${fileName}`);
 
-    const thumbExt = thumbnail.name.split(".").pop();
+    const thumbExt = thumbnail.name.split('.').pop();
     const thumbFileName = `${slug}-thumb.${thumbExt}`;
 
     thumbnail.mv(`./uploads/${thumbFileName}`);
 
     const ingredient = req.app.db
-      .get("ingredients")
+      .get('ingredients')
       .find({ id: req.params.ingredientId })
       .assign({
         name,
@@ -248,10 +248,10 @@ router.put("/:ingredientId", (req, res) => {
  *         description: Ингредиент был успешно удалён
  *
  */
-router.delete("/:ingredientId", (req, res) => {
-  req.app.db.get("ingredients").remove({ id: req.params.ingredientId }).write();
+router.delete('/:ingredientId', (req, res) => {
+  req.app.db.get('ingredients').remove({ id: req.params.ingredientId }).write();
 
-  res.send({ status: true, message: "Success" });
+  res.send({ status: true, message: 'Success' });
 });
 
 module.exports = router;
