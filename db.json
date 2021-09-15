@@ -2,7 +2,7 @@
   "ingredients": [
     {
       "id": "Odd5HuC4",
-      "name": "Бекон",
+      "name": "Bacon",
       "slug": "bacon",
       "price": "100",
       "category": "meat",
@@ -142,12 +142,7 @@
       "size": "30",
       "dough": "thin",
       "sauce": "mayo",
-      "ingredients": [
-        "pineapple",
-        "cucumber",
-        "salami",
-        "bacon"
-      ],
+      "ingredients": ["pineapple", "cucumber", "salami", "bacon"],
       "address": "Москва, улица Королёва 13",
       "card_number": "1234 1234 1234 1234",
       "name": "Иванов Иван Иванович",
@@ -158,11 +153,7 @@
       "size": 30,
       "dough": "thick",
       "sauce": "mayo",
-      "ingredients": [
-        "cucumber",
-        "salami",
-        "bacon"
-      ],
+      "ingredients": ["cucumber", "salami", "bacon"],
       "address": "Sesame Street *",
       "name": "Ivan Ivanov",
       "card_number": "0000 0000 0000 0000",
@@ -173,10 +164,7 @@
       "size": 35,
       "dough": "thick",
       "sauce": "mayo",
-      "ingredients": [
-        "salami",
-        "bacon"
-      ],
+      "ingredients": ["salami", "bacon"],
       "address": "Sesame Street *",
       "name": "Yulia Ivanova",
       "card_number": "0000 0000 0000 0000",
