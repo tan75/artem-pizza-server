@@ -11,7 +11,7 @@
     },
     {
       "id": "xXibhlsf",
-      "name": "Брокколи",
+      "name": "Broccoli",
       "slug": "broccoli",
       "price": "100",
       "category": "vegetables",
@@ -20,7 +20,7 @@
     },
     {
       "id": "zPVQ1E4O",
-      "name": "Чеддер",
+      "name": "Cheddar",
       "slug": "cheddar",
       "price": "100",
       "category": "cheese",
@@ -29,7 +29,7 @@
     },
     {
       "id": "2T7Cta-s",
-      "name": "Курица",
+      "name": "Chicken",
       "slug": "chicken",
       "price": "100",
       "category": "meat",
@@ -38,7 +38,7 @@
     },
     {
       "id": "jXkRoKy5",
-      "name": "Дор-Блю",
+      "name": "Dor Blue",
       "slug": "dor-blue",
       "price": "100",
       "category": "cheese",
@@ -47,7 +47,7 @@
     },
     {
       "id": "Iieg-VZk",
-      "name": "Ветчина",
+      "name": "Ham",
       "slug": "ham",
       "price": "100",
       "category": "meat",
@@ -56,7 +56,7 @@
     },
     {
       "id": "KfE8q4-l",
-      "name": "Грибы",
+      "name": "Mushrooms",
       "slug": "mushrooms",
       "price": "100",
       "category": "vegetables",
@@ -65,7 +65,7 @@
     },
     {
       "id": "KJ1aL-Cn",
-      "name": "Моцарелла",
+      "name": "Mozarella",
       "slug": "mozarella",
       "price": "100",
       "category": "cheese",
@@ -74,7 +74,7 @@
     },
     {
       "id": "88ahAhOr",
-      "name": "Оливки",
+      "name": "Olives",
       "slug": "olives",
       "price": "100",
       "category": "vegetables",
@@ -83,7 +83,7 @@
     },
     {
       "id": "l_dyuPpb",
-      "name": "Лук",
+      "name": "Onion",
       "slug": "onion",
       "price": "100",
       "category": "vegetables",
@@ -92,7 +92,7 @@
     },
     {
       "id": "RyzrCzfQ",
-      "name": "Перец",
+      "name": "Pepper",
       "slug": "pepper",
       "price": "100",
       "category": "vegetables",
@@ -101,7 +101,7 @@
     },
     {
       "id": "KZKWP7Mt",
-      "name": "Пепперони",
+      "name": "Pepperoni",
       "slug": "pepperoni",
       "price": "100",
       "category": "meat",
@@ -110,7 +110,7 @@
     },
     {
       "id": "3EEnpHfa",
-      "name": "Ананас",
+      "name": "Pineapple",
       "slug": "pineapple",
       "price": "100",
       "category": "vegetables",
@@ -119,7 +119,7 @@
     },
     {
       "id": "qLdDrMz4",
-      "name": "Салями",
+      "name": "Salami",
       "slug": "salami",
       "price": "100",
       "category": "meat",
@@ -128,7 +128,7 @@
     },
     {
       "id": "szPhZsmh",
-      "name": "Томаты",
+      "name": "Tomatoes",
       "slug": "tomato",
       "price": "100",
       "category": "vegetables",
