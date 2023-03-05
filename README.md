@@ -1,29 +1,29 @@
-# Artem-pizza сервер
+# Artem-pizza server
 
-Для запуска выполните команду:
+Start the server:
 
-```
+```bash
 yarn start
 ```
 
-По умолчанию сервер запустится по адресу `localhost:3000`
-По умолчанию сервер запустится по адресу `localhost:8080`
+The default port is 8080: `localhost:8080`
 
-## Документация API
-
-Документация доступна по адресу `localhost:3000/api-docs`.
+## Documentation
 
 ### Ingredients
 
-API ингредиентов для Пиццы. Документация доступна по адресу:
+Pizza ingredients API docs:
 
-`localhost:8080/v1/api-docs/`
+```bash
+localhost:8080/v1/api-docs/
+```
 
 ### Admin Auth
 
-API авторизации в админке. Позволяет получить доступ к созданию, обновлению и удалению ингредиентов. Документация доступна по адресу:
+Auth API for admin panel. Allows to get access for creating, updating and removing the ingredients.
 
-`localhost:8080/v2/api-docs/`
+```bash
+localhost:8080/v2/api-docs/
+```
 
-Документация сгенерирована при помощи [Swagger](https://swagger.io/)
-Документация сгенерирована при помощи [Swagger](https://swagger.io/)
+The documentation is generated using [Swagger](https://swagger.io/)
