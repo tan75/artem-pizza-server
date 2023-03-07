@@ -1,4 +1,4 @@
-# Artem-pizza server
+# Papaginos-pizza server
 
 Start the server:
 
